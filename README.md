@@ -63,6 +63,5 @@ Content-Type: application/json
 }
 
 
-## API collection 
-https://api.postman.com/collections/6329410-05d2e5c8-4bef-4fd4-a452-d9743b3569dd?access_key=PMAT-01JRHVX2T3CQKE5S5ZDZPCD5HM
+
 
