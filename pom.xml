@@ -157,6 +157,7 @@
 
 
 		</plugins>
+		<finalName>demo</finalName>
 	</build>
 
 
