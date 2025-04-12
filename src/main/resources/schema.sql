@@ -10,14 +10,24 @@ CREATE TABLE employees (
 );
 
 
-CREATE TABLE users (
+
+CREATE TABLE IF NOT EXISTS users (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
-    username VARCHAR(50) NOT NULL UNIQUE,
-    password VARCHAR(100) NOT NULL
+    username VARCHAR(50) UNIQUE NOT NULL,
+    password VARCHAR(255) NOT NULL
 );
 
-CREATE TABLE users_roles (
-    user_id BIGINT NOT NULL,
-    roles VARCHAR(255),
-    FOREIGN KEY (user_id) REFERENCES users(id)
+
+
+CREATE TABLE IF NOT EXISTS role (
+    name VARCHAR(50) PRIMARY KEY
+);
+
+
+CREATE TABLE IF NOT EXISTS user_roles (
+    user_id BIGINT,
+    role_name VARCHAR(50),
+    PRIMARY KEY (user_id, role_name),
+    FOREIGN KEY (user_id) REFERENCES users(id),
+    FOREIGN KEY (role_name) REFERENCES role(name)
 );

@@ -1,26 +1,29 @@
 package com.example.demo.auth.service;
 
+import java.security.NoSuchAlgorithmException;
+import java.util.Base64;
+import java.util.Date;
+import java.util.function.Function;
+import java.util.stream.Collectors;
+
+import javax.crypto.KeyGenerator;
+import javax.crypto.SecretKey;
+
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.stereotype.Service;
+
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.stereotype.Service;
-
-import javax.crypto.KeyGenerator;
-import javax.crypto.SecretKey;
-import java.security.NoSuchAlgorithmException;
-import java.util.Base64;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.function.Function;
 
 @Service
 public class JWTService {
 
 
     private String secretkey = "";
+    private final long jwtExpirationMs = 86400000; // 24 hrs
 
     public JWTService() {
 
@@ -33,20 +36,16 @@ public class JWTService {
         }
     }
 
-    public String generateToken(String username) {
-        Map<String, Object> claims = new HashMap<>();
-        //for now claims are empty 
-        
+    public String generateToken(UserDetails userDetails) {
         return Jwts.builder()
-                .claims()
-                .add(claims)
-                .subject(username)
-                .issuedAt(new Date(System.currentTimeMillis()))
-                .expiration(new Date(System.currentTimeMillis() + 60 * 60 * 30))
-                .and()
-                .signWith(getKey())
+                .subject(userDetails.getUsername())
+                .claim("roles", userDetails.getAuthorities().stream()
+                        .map(GrantedAuthority::getAuthority)
+                        .collect(Collectors.toList()))
+                .issuedAt(new Date())
+                .expiration(new Date(System.currentTimeMillis() + jwtExpirationMs))
+                .signWith( getKey())
                 .compact();
-
     }
 
     private SecretKey getKey() {
@@ -84,5 +83,7 @@ public class JWTService {
     private Date extractExpiration(String token) {
         return extractClaim(token, Claims::getExpiration);
     }
+    
+    
 
 }

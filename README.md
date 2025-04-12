@@ -43,7 +43,7 @@ http://localhost:8080/actuator
 
 
 ## Login Endpoint
-POST:  http://localhost:8080/login
+#POST:  http://localhost:8080/login
 
 Content-Type: application/json
 
@@ -53,15 +53,21 @@ Content-Type: application/json
 }
 
 
-POST:  http://localhost:8080/register
+#POST:  http://localhost:8080/register
 
 Content-Type: application/json
 
 {
-    "username":"tes",
+    "username":"alice",
     "password":"password123"
 }
 
+## Summary of Custom Table Names
+	Auth Table Description
+1. 	users	-->Stores users
 
+2.  roles	-->Stores roles
+
+3.  user_roles	-->Join table (many-to-many)
 
 

@@ -8,7 +8,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.web.PageableDefault;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -42,14 +41,14 @@ public class EmployeeController {
 
 	}
 
-	@PutMapping("/{id}")
+	@PutMapping("/update/{id}")
 	public Optional<Employee> updateEmployeeById(@PathVariable Long id, @RequestBody @Valid Employee updatedEmployee) {
 		return empService.updateEmployeeById(id, updatedEmployee);
 
 	}
 
-	@PreAuthorize("hasRole('ADMIN')")
-	@DeleteMapping("/{id}")
+	
+	@DeleteMapping("/delete/{id}")
 	public void deleteEmployee(@PathVariable Long id) {
 		empService.deleteEmployeeById(id);
 

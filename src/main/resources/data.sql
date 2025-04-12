@@ -27,5 +27,9 @@ INSERT INTO users (username, password) VALUES ('charlie', 'charlie123');
 INSERT INTO users (username, password) VALUES ('diana', 'mypassword');
 
 
-INSERT INTO users_roles (user_id, roles) VALUES
-(1, 'ROLE_ADMIN');
+INSERT INTO role (name) VALUES ('ROLE_USER');
+INSERT INTO role (name) VALUES ('ROLE_ADMIN');
+
+
+INSERT INTO user_roles (user_id, role_name) VALUES (1, 'ROLE_ADMIN');
+INSERT INTO user_roles (user_id, role_name) VALUES (2, 'ROLE_USER');
